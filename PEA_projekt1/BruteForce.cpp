@@ -1,74 +1,110 @@
 #include "BruteForce.h"
-#include <iostream>
-#include <climits> 
+#include <climits>
+#include <chrono>
 
 using namespace std;
 
 BruteForce::BruteForce(const Graph& g) : graph(g) {
-    int N = graph.getN();
+
+    N = graph.getN();
+    macierz = graph.getMacierz();
+
     bestPath = new int[N];
     minCost = INT_MAX;
+	overallTime = 0.0;
 }
 
 BruteForce::~BruteForce() {
     delete[] bestPath;
 }
 
-// Główna funkcja rekurencyjna 
-void BruteForce::search(int currentCity, int visitedCount, int currentCost, int* currentPath, bool* visited) {
+//Zamiana elementów
+void BruteForce::swapElements(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+// Odwracanie fragmentu tablicy 
+void BruteForce::reverseArray(int* array, int start, int end) {
+    while (start < end) {
+        swapElements(array[start], array[end]);
+        start++;
+        end--;
+    }
+}
+
+// Jeśli jest możliwa to wyliczanie nowej permutacji
+bool BruteForce::nextPermutation(int* array, int length) {
+
+    int k = -1;
+    for (int i = 0; i < length - 1; ++i) {
+        if (array[i] < array[i + 1]) {
+            k = i;
+        }
+    }
+
+    if (k == -1) return false;
+
+    int l = -1;
+    for (int i = k + 1; i < length; ++i) {
+        if (array[k] < array[i]) {
+            l = i;
+        }
+    }
+
+    swapElements(array[k], array[l]);
+
+    reverseArray(array, k + 1, length - 1);
+
+    return true; 
+}
+
+// Główna funkcja algorytmu
+int* BruteForce::FindPath() {
     int N = graph.getN();
-    int** macierz = graph.getMacierz();
+    if (N <= 1) return nullptr;
 
-    if (visitedCount == N) {
-        int finalCost = currentCost + macierz[currentCity][0];
+    int* currentPath = new int[N];
+    minCost = INT_MAX;
 
-        if (finalCost < minCost) {
-            minCost = finalCost;
+    // Inicjalizacja pierwszej, bazowej trasy 
+    for (int i = 0; i < N; ++i) {
+        currentPath[i] = i;
+    }
+
+    // ITERACYJNE PRZESZUKIWANIE ZUPEŁNE
+	auto beginTime = chrono::high_resolution_clock::now();
+    do {
+        int currentCost = 0;
+
+        for (int i = 0; i < N - 1; ++i) {
+            currentCost += macierz[currentPath[i]][currentPath[i + 1]];
+        }
+
+        currentCost += macierz[currentPath[N - 1]][currentPath[0]];
+
+        if (currentCost < minCost) {
+            minCost = currentCost;
+
             for (int i = 0; i < N; ++i) {
                 bestPath[i] = currentPath[i];
             }
         }
-        return;
-    }
 
-    for (int i = 1; i < N; ++i) {
-        if (!visited[i]) {
 
-            visited[i] = true;
-            currentPath[visitedCount] = i;
+    } while (nextPermutation(currentPath, N));
+	auto endTime = chrono::high_resolution_clock::now();
 
-            search(i, visitedCount + 1, currentCost + macierz[currentCity][i], currentPath, visited);
-
-            visited[i] = false;
-        }
-    }
-}
-
-// Metoda uruchamiająca algorytm
-int* BruteForce::FindPath() {
-    int N = graph.getN();
-    if (N == 0) return nullptr;
-
-    int* currentPath = new int[N];
-    bool* visited = new bool[N];
-
-    for (int i = 0; i < N; ++i) {
-        visited[i] = false;
-        currentPath[i] = -1;
-    }
-
-    currentPath[0] = 0;
-    visited[0] = true;
-    minCost = INT_MAX; 
-
-    search(0, 1, 0, currentPath, visited);
+	overallTime = chrono::duration<double, std::milli>(endTime - beginTime).count();
 
     delete[] currentPath;
-    delete[] visited;
-
-    return bestPath;
+    return bestPath;      
 }
 
 int BruteForce::getMinCost() const {
     return minCost;
+}
+double BruteForce::getOverallTime() const {
+    return overallTime;
 }

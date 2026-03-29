@@ -6,14 +6,20 @@ class BruteForce
 private:
     const Graph& graph;   
     int* bestPath;        
-    int minCost;           
+    int minCost;
+    int** macierz;
+    int N;
+	double overallTime;
 
-    void search(int currentCity, int visitedCount, int currentCost, int* currentPath, bool* visited);
 
 public:
     BruteForce(const Graph& g);
     ~BruteForce();
 
+    void swapElements(int& a, int& b);
+    void reverseArray(int* array, int start, int end);
+    bool nextPermutation(int* array, int length);
     int* FindPath();
     int getMinCost() const;
+	double getOverallTime() const;
 };

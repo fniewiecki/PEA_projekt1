@@ -60,7 +60,7 @@ void Graph::display()
     {
         for (int j = 0; j < N; j++)
         {
-            cout << macierz[i][j] << " ";
+            cout << macierz[i][j] << "     ";
         }
         cout << endl;
     }

@@ -2,6 +2,8 @@
 #include <string>
 #include "Graph.h"
 #include "BruteForce.h"
+#include "NearestNeighbour.h"
+#include "RNN.h"
 
 using namespace std;
 
@@ -26,7 +28,9 @@ void trybPokazowy() {
 
     while (true) {
         cout << "\nWybierz algorytm do uruchomienia:" << endl;
-        cout << "1. Przeglad Zupelny (Brute Force)" << endl;
+        cout << "1. Brute Force" << endl;
+        cout << "2. Nearest Neighbour" << endl;
+		cout << "3. Repetetive Nearest Neghbour" << endl;
         cout << "0. Powrot" << endl;
         cout << "Wybor: ";
 
@@ -36,7 +40,6 @@ void trybPokazowy() {
         char algChoice = algChoiceStr[0];
 
         if (algChoice == '1') {
-            cout << "\nUruchamiam Brute Force..." << endl;
             BruteForce bf(graph);
 
             int* bestRoute = bf.FindPath();
@@ -45,6 +48,40 @@ void trybPokazowy() {
             if (bestRoute != nullptr) {
                 cout << "\nWynik Brute Force:" << endl;
                 cout << "Najmniejszy koszt: " << bf.getMinCost() << endl;
+				cout << "Czas wykonania: " << bf.getOverallTime() << " milisekund" << endl;
+                cout << "Najlepsza trasa: ";
+                for (int i = 0; i < N; i++) {
+                    cout << bestRoute[i] << " -> ";
+                }
+                cout << bestRoute[0] << endl;
+            }
+        }
+        else if (algChoice == '2') {
+            NearestNeighbour nn(graph);
+            int N = graph.getN();
+            int* bestRoute = nn.getPath();
+
+            if (bestRoute != nullptr) {
+                cout << "\nWynik Nearest Neighbour:" << endl;
+                cout << "Najmniejszy koszt: " << nn.getMinCost() << endl;
+                cout << "Czas wykonania: " << nn.getTime() << " milisekund" << endl;
+                cout << "Najlepsza trasa: ";
+                for (int i = 0; i < N; i++) {
+                    cout << bestRoute[i] << " -> ";
+                }
+                cout << bestRoute[0] << endl;
+            }
+        }
+        else if (algChoice == '3')
+        {
+            RNN rnn(graph);
+            int N = graph.getN();
+            int* bestRoute = rnn.getPath();
+
+            if (bestRoute != nullptr) {
+                cout << "\nWynik Repetetive Nearest Neighbour:" << endl;
+                cout << "Najmniejszy koszt: " << rnn.getMinCost() << endl;
+                cout << "Czas wykonania: " << rnn.getTime() << " milisekund" << endl;
                 cout << "Najlepsza trasa: ";
                 for (int i = 0; i < N; i++) {
                     cout << bestRoute[i] << " -> ";

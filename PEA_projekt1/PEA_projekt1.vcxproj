@@ -129,13 +129,17 @@
   <ItemGroup>
     <ClCompile Include="BruteForce.cpp" />
     <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="NearestNeighbour.cpp" />
     <ClCompile Include="PEA_projekt1.cpp" />
     <ClCompile Include="Rand.cpp" />
+    <ClCompile Include="RNN.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BruteForce.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="NearestNeighbour.h" />
     <ClInclude Include="Rand.h" />
+    <ClInclude Include="RNN.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

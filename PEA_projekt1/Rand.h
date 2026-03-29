@@ -4,7 +4,13 @@
 class Rand
 {
 private:
-	const Graph& graph;
+    const Graph& graph;
+    int* bestPath;
+    int minCost;
+    int** macierz;
+    int N;
+    double overallTime;
+
 public:
 	Rand(const Graph& g);
 	~Rand();

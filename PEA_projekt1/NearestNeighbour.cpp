@@ -52,7 +52,7 @@ int* NearestNeighbour::getPath() {
         currentCity = nearestCity;
     }
 
-    // Bilet powrotny do miasta 0
+    // Dopisanie kosztu powrotu do 1 miasta 
     minCost += macierz[currentCity][startCity];
 
     auto endTime = chrono::high_resolution_clock::now();

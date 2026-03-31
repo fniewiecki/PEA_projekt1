@@ -1,3 +1,2 @@
-﻿  NearestNeighbour.cpp
-C:\Users\DELL\Desktop\studia\6 semestr\PEA\projekt_1\PEA_projekt1\PEA_projekt1\NearestNeighbour.cpp(31,15): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
-  PEA_projekt1.vcxproj -> C:\Users\DELL\Desktop\studia\6 semestr\PEA\projekt_1\PEA_projekt1\x64\Debug\PEA_projekt1.exe
+﻿  PEA_projekt1.cpp
+  PEA_projekt1.vcxproj -> C:\Users\PC\Desktop\studyja\semestr 6\PEA\P1\PEA_projekt1\x64\Debug\PEA_projekt1.exe

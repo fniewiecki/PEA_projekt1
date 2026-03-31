@@ -5,16 +5,18 @@ class Rand
 {
 private:
     const Graph& graph;
+    int N;
+    int** macierz;
     int* bestPath;
     int minCost;
-    int** macierz;
-    int N;
     double overallTime;
+    int iterations;
 
 public:
-	Rand(const Graph& g);
-	~Rand();
+    Rand(const Graph& g, int iter = 10000);
+    ~Rand();
 
-	int * FindPath();
+    int* getPath();
+    double getTime() const;
+    int getMinCost() const;
 };
-
